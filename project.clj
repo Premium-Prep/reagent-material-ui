@@ -7,6 +7,7 @@
                  [org.clojure/clojurescript "1.10.597"]
                  [reagent "0.10.0"]
                  [cljsjs/material-ui "4.9.5-0"]
+                 [cljsjs/material-ui-lab "4.0.0-alpha.49-0"]
                  [cljsjs/material-ui-pickers "3.2.7-0"]
                  [com.andrewmcveigh/cljs-time "0.5.2"]
                  [camel-snake-kebab "0.4.1"]]

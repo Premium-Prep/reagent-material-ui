@@ -9,6 +9,7 @@
                  [cljsjs/material-ui "4.9.5-0"]
                  [cljsjs/material-ui-lab "4.0.0-alpha.49-0"]
                  [cljsjs/material-ui-pickers "3.2.7-0"]
+                 [cljsjs/material-table "1.57.2-0"]
                  [com.andrewmcveigh/cljs-time "0.5.2"]
                  [camel-snake-kebab "0.4.1"]]
   :plugins [[lein-cljfmt "0.6.6"]]

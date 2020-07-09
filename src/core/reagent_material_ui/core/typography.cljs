@@ -2,6 +2,6 @@
   "Imports @material-ui/core/Typography as a Reagent component.
    Original documentation is at https://material-ui.com/api/typography/ ."
   (:require [reagent-material-ui.util :refer [adapt-react-class]]
-            [material-ui]))
+            ["@material-ui/core/Typography" :as MuiTypography]))
 
-(def typography (adapt-react-class (.-Typography js/MaterialUI) "mui-typography"))
+(def typography (adapt-react-class (or (.-default MuiTypography) (.-Typography MuiTypography)) "mui-typography"))

@@ -2,6 +2,6 @@
   "Imports @material-ui/core/CssBaseline as a Reagent component.
    Original documentation is at https://material-ui.com/api/css-baseline/ ."
   (:require [reagent-material-ui.util :refer [adapt-react-class]]
-            [material-ui]))
+            ["@material-ui/core/CssBaseline" :as MuiCssBaseline]))
 
-(def css-baseline (adapt-react-class (.-CssBaseline js/MaterialUI) "mui-css-baseline"))
+(def css-baseline (adapt-react-class (or (.-default MuiCssBaseline) (.-CssBaseline MuiCssBaseline)) "mui-css-baseline"))

@@ -2,6 +2,6 @@
   "Imports @material-ui/core/Chip as a Reagent component.
    Original documentation is at https://material-ui.com/api/chip/ ."
   (:require [reagent-material-ui.util :refer [adapt-react-class]]
-            [material-ui]))
+            ["@material-ui/core/Chip" :as MuiChip]))
 
-(def chip (adapt-react-class (.-Chip js/MaterialUI) "mui-chip"))
+(def chip (adapt-react-class (or (.-default MuiChip) (.-Chip MuiChip)) "mui-chip"))

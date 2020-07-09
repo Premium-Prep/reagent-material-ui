@@ -2,6 +2,6 @@
   "Imports @material-ui/core/Divider as a Reagent component.
    Original documentation is at https://material-ui.com/api/divider/ ."
   (:require [reagent-material-ui.util :refer [adapt-react-class]]
-            [material-ui]))
+            ["@material-ui/core/Divider" :as MuiDivider]))
 
-(def divider (adapt-react-class (.-Divider js/MaterialUI) "mui-divider"))
+(def divider (adapt-react-class (or (.-default MuiDivider) (.-Divider MuiDivider)) "mui-divider"))

@@ -25,6 +25,7 @@
           controlled? (some? value)
           ^js/React.Ref input-ref (use-ref nil)
           ^js/React.Ref shadow-ref (use-ref nil)
+          ^js/React.Ref renders (use-ref 0)
           handle-ref (use-fork-ref (:input-ref props) input-ref ref)
           [state set-state] (use-state {})
           sync-height (use-callback #(let [input (.-current input-ref)
@@ -32,6 +33,8 @@
                                            computed-style (.getComputedStyle js/window input)
                                            _ (set! (.-width (.-style shadow)) (obj/get computed-style "width"))
                                            _ (set! (.-value shadow) (or (.-value input) placeholder "x"))
+                                           _ (when (= (last (.-value shadow)) \newline)
+                                               (set! (.-value shadow) (str (.-value shadow) " ")))
                                            box-sizing (obj/get computed-style "box-sizing")
                                            padding (+ (get-style-value computed-style "padding-bottom")
                                                       (get-style-value computed-style "padding-top"))
@@ -49,25 +52,41 @@
                                                           outer-height)
                                            overflow? (not (different? outer-height inner-height))]
                                        (set-state (fn [prev-state]
-                                                    (if (or (and (pos? outer-height)
-                                                                 (different? (:height prev-state) outer-height))
-                                                            (not= overflow? (:overflow? prev-state)))
-                                                      {:overflow? overflow?
-                                                       :height    outer-height}
-                                                      prev-state))))
+                                                    (if (and (< (.-current renders) 20)
+                                                             (or (and (pos? outer-height)
+                                                                      (different? (:height prev-state) outer-height))
+                                                                 (not= overflow? (:overflow? prev-state))))
+                                                      (do
+                                                        (set! (.-current renders) (inc (.-current renders)))
+                                                        {:overflow? overflow?
+                                                         :height    outer-height})
+                                                      (do
+                                                        (when (and (or (not (exists? js/process))
+                                                                       (not= "production" (.. js/process -env -NODE_ENV)))
+                                                                   (= (.-current renders) 20))
+                                                          (.error js/console "Material-UI: too many re-renders. The layout is unstable.\nTextareaAutosize limits the number of renders to prevent an infinite loop"))
+                                                        prev-state)))))
                                     #js [rows-max rows-min placeholder])
           handle-change (fn [e]
+                          (set! (.-current renders) 0)
                           (when-not controlled?
                             (sync-height))
                           (when on-change
                             (on-change e)))]
-      (use-effect #(let [handle-resize (debounce sync-height 166)]
+      (use-effect #(let [handle-resize (debounce (fn []
+                                                   (set! (.-current renders) 0)
+                                                   (sync-height))
+                                                 166)]
                      (.addEventListener js/window "resize" handle-resize)
                      (fn []
                        (.clear handle-resize)
                        (.removeEventListener js/window "resize" handle-resize)))
                   #js [sync-height])
       (use-layout-effect sync-height)
+      (use-effect (fn []
+                    (set! (.-current renders) 0)
+                    js/undefined)
+                  #js [value])
       (r/as-element
        [:<>
         [:textarea (remove-undefined-vals

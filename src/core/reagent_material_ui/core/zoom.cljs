@@ -2,6 +2,6 @@
   "Imports @material-ui/core/Zoom as a Reagent component.
    Original documentation is at https://material-ui.com/api/zoom/ ."
   (:require [reagent-material-ui.util :refer [adapt-react-class]]
-            [material-ui]))
+            ["@material-ui/core/Zoom" :as MuiZoom]))
 
-(def zoom (adapt-react-class (.-Zoom js/MaterialUI) "mui-zoom"))
+(def zoom (adapt-react-class (or (.-default MuiZoom) (.-Zoom MuiZoom)) "mui-zoom"))

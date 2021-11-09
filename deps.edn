@@ -1,0 +1,8 @@
+{:paths ["src/core" "src/icons"]
+ :deps  {reagent/reagent                     {:mvn/version "0.10.0"}
+         com.andrewmcveigh/cljs-time         {:mvn/version "0.5.2"}
+         camel-snake-kebab/camel-snake-kebab {:mvn/version "0.4.1"}
+         cljsjs/material-ui                  {:mvn/version "4.9.5-0"}
+         cljsjs/material-ui-lab              {:mvn/version "4.0.0-alpha.49-0"}
+         cljsjs/material-ui-pickers          {:mvn/version "3.2.7-0"}
+         cljsjs/material-table               {:mvn/version "1.57.2-0"}}}

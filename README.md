@@ -17,6 +17,11 @@ To add Material UI to an existing Reagent project, just add this library to your
 ```
 [arttuka/reagent-material-ui "4.9.5-1"]
 ```
+via Deps
+```
+github-Premium-Prep/reagent-material-ui {:git/url "https://github.com/Premium-Prep/reagent-material-ui"
+                                         :sha "58b5a4b09e23289d4ac5dbb1475e95af06e2a612"}
+```
 
 Most of the library is in the form of regular Reagent components. Each component is contained in a namespace that mirrors
 Material UI's modules. For example, `@material-ui/core/IconButton` becomes `reagent-material-ui.core.icon-button/icon-button`
